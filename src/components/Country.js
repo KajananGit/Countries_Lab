@@ -1,19 +1,24 @@
 import { useState } from "react";
 
-const Country = ({ country }) => {
+const Country = ({ country, addCountriesVisited }) => {
 
-    const [didVisit, setVisit] = useState(false);
-    // const mapCapitals = country.capital.map(capital => <p key={country.flag}>{capital}</p>)
+    
+
+    const mapCapitals = () => {
+        if(country.capital){
+            return country.capital.map((capital, id) => <p key={id}>{capital}</p>)  
+        }
+    }
+
 
     const handleClick = () => {
-        setVisit(true);
+        addCountriesVisited(country);
     }
 
     return ( 
         <>
             <h3>{country.name.common}</h3>
-            <p>{country.capital}</p>
-            {/* {mapCapitals} */}
+            {mapCapitals()}
             <button onClick={handleClick}>Visited!</button>
             
         </>
