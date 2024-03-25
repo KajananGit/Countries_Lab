@@ -1,12 +1,13 @@
 import { useState } from "react";
+import "../styles/CountryStyles.css"
 
-const Country = ({ country, addCountriesVisited }) => {
+const Country = ({ country, addCountriesVisited, visitedStatus }) => {
 
     
 
     const mapCapitals = () => {
         if(country.capital){
-            return country.capital.map((capital, id) => <p key={id}>{capital}</p>)  
+            return country.capital.map((capital, id) => <p key={id}> Captial City: {capital}</p>)  
         }
     }
 
@@ -17,9 +18,11 @@ const Country = ({ country, addCountriesVisited }) => {
 
     return ( 
         <>
-            <h3>{country.name.common}</h3>
+            <h3>{country.name.common} {country.flag}</h3>
+            <p>Region: {country.subregion}</p>
             {mapCapitals()}
-            <button onClick={handleClick}>Visited!</button>
+            <p>Population: {country.population}</p>
+            {!visitedStatus ?(<button onClick={handleClick}>Visited</button>) : (<></>) }
             
         </>
      );

@@ -1,4 +1,4 @@
-.Countries {
+.countries {
     display: flex;
-   
+    justify-content: center;
 }

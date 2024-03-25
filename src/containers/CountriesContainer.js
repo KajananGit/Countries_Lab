@@ -4,15 +4,15 @@ import "../styles/CountriesContainerStyles.css";
 
 const CountriesContainer = () => {
     
-    const [countries, setCountires] = useState([]);
-    const [countriesVisited, setCountiresVisited] = useState([]);
+    const [countries, setCountries] = useState([]);
+    const [countriesVisited, setCountriesVisited] = useState([]);
     
 
     const loadData = async () => {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const jsonData = await response.json();
-        setCountires(jsonData);
-        //setCountiresVisited(jsonData);
+        setCountries(jsonData);
+        //setcountriesVisited(jsonData);
     }
     
     useEffect(() => {
@@ -21,20 +21,39 @@ const CountriesContainer = () => {
     
     useEffect(() => {
         console.log(countries);
-    })
+    }, [countries])
+
+    useEffect(() => {
+        const updatedCountriesList = [];
+        countries.forEach(country => {
+            if(!countriesVisited.includes(country)){
+                updatedCountriesList.push(country);
+            }
+            setCountries(updatedCountriesList);
+        })
+    }, [countriesVisited])
+
+
+
 
     const addCountriesVisited = (country) => {
-        setCountiresVisited([...countriesVisited, country]);
+        setCountriesVisited([...countriesVisited, country]);
     }
 
 
     return ( 
         <>  
-            <div className="Countries">
-                <h3>Countires To Visit: </h3>
-                <div><CountriesList countries={countries} setCountries={setCountires} addCountriesVisited={addCountriesVisited}/></div>
-                <h3>Countries Visited: </h3>
-                <div><CountriesList countries={countriesVisited} /></div>
+            <div className="countries">
+                
+                <div>
+                    <h2>Countries To Visit: </h2>
+                    <CountriesList countries={countries} setCountries={setCountries} addCountriesVisited={addCountriesVisited} visitedStatus={false}/>
+                </div>
+            
+                <div>
+                    <h2>Countries Visited: </h2>
+                    <CountriesList countries={countriesVisited} visitedStatus={true}/>
+                </div>
             </div>
         </>
      );
