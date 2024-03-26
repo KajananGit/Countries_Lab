@@ -1,4 +1,18 @@
 .countries {
     display: flex;
+    justify-content: space-around;
+}
+
+form {
+    display: flex;
     justify-content: center;
+    margin-top: 10px;
+}
+
+input {
+    font-size: 20px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px 12px 5px 12px;
+    background-color: rgb(245, 229, 244);
 }

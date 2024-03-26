@@ -6,13 +6,13 @@ const CountriesContainer = () => {
     
     const [countries, setCountries] = useState([]);
     const [countriesVisited, setCountriesVisited] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
     
 
     const loadData = async () => {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const jsonData = await response.json();
         setCountries(jsonData);
-        //setcountriesVisited(jsonData);
     }
     
     useEffect(() => {
@@ -40,14 +40,26 @@ const CountriesContainer = () => {
         setCountriesVisited([...countriesVisited, country]);
     }
 
+    
+    const filteredCountries = countries.filter(country => {
+            return country.name.common.toLowerCase().includes(searchValue.toLocaleLowerCase());
+    })
+
+
 
     return ( 
         <>  
+            <form>
+                <input type="text"  
+                       value={searchValue} onChange={event => setSearchValue(event.target.value)} 
+                       placeholder="Search country..."/>
+            </form>
+            
             <div className="countries">
                 
                 <div>
                     <h2>Countries To Visit: </h2>
-                    <CountriesList countries={countries} setCountries={setCountries} addCountriesVisited={addCountriesVisited} visitedStatus={false}/>
+                    <CountriesList countries={filteredCountries} setCountries={setCountries} addCountriesVisited={addCountriesVisited} visitedStatus={false}/>
                 </div>
             
                 <div>
